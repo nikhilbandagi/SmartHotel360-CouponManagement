@@ -4,7 +4,7 @@
   "parameters": {
     "webAppName": {
       "type": "string",
-      "defaultValue": "hotel-coupon-mgmt",
+      "defaultValue": "Hotel-Coupon-Mgmt-System",
       "metadata": {
         "description": "The name of the web app that you wish to create."
       }
@@ -18,14 +18,14 @@
     },
     "mySQLAdminLoginPassword": {
       "type": "securestring",
-      "defaultValue": "",
+      "defaultValue": "MySequel@11",
       "metadata": {
         "description": "This field should be between 8 and 128 characters long. Your password must contain characters from three of the following categories – English uppercase letters, English lowercase letters, numbers (0-9), and non-alphanumeric characters (!, $, #, %, etc.)."
       }
     },
     "sourceCodeRepositoryURL": {
       "type": "string",
-      "defaultValue": "https://github.com/<YourAccount>/SmartHotel360-CouponManagement",
+      "defaultValue": "https://github.com/nikhilbandagi/SmartHotel360-CouponManagement",
       "metadata": {
         "description": "Source code repository URL"
       }
@@ -46,11 +46,11 @@
     }
   },
   "variables": {
-    "location": "[resourceGroup().location]",
+    "location": "ukwest",
     "webAppName": "[parameters('webAppName')]",
     "servicePlanName": "[variables('webAppName')]",
-    "mySQLServerName": "[variables('webAppName')]",
-    "mySQLDatabaseName": "hotel_coupon"
+    "mySQLServerName": "ubuntuqlserver",
+    "mySQLDatabaseName": "hotel_coupon_dtabase"
   },
   "resources": [
     {
@@ -58,17 +58,18 @@
       "type": "Microsoft.DBforMySQL/servers",
       "name": "[variables('mySQLServerName')]",
       "sku": {
-        "name": "B_Gen5_1",
+        "name": "GP_Gen5_4",
         "tier": "Basic",
         "family": "Gen5",
-        "capacity": 1
+        "size": 102400,
+        "capacity": 4
       },
       "location": "[variables('location')]",
       "properties": {
         "administratorLogin": "[parameters('mySQLAdminLoginName')]",
         "administratorLoginPassword": "[parameters('mySQLAdminLoginPassword')]",
         "storageProfile": {
-          "storageMB": 5120,
+          "storageMB": 102400,
           "backupRetentionDays": 7,
           "geoRedundantBackup": "Disabled"
         },
@@ -109,10 +110,10 @@
       "kind": "app",
       "location": "[variables('location')]",
       "sku": {
-        "name": "B1",
+        "name": "F1",
         "tier": "Basic",
-        "size": "B1",
-        "family": "B",
+        "size": "F1",
+        "family": "F",
         "capacity": 1
       }
     },
